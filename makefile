@@ -12,10 +12,10 @@ src := ./src/
 jniSrc := ./src/jni/
 javaSrc := ./src/com/tiger/daily/pnative/
 jniLibs := ./src/jniLibs/
+packageName := com.tiger.daily.pnative.
 
 #system setting
 javaLibPath := ~/.local/share/umake/ide/idea/bin/
-packageName := com.tiger.daily.pnative.
 
 vpath %.java $(javaSrc)
 vpath %.c $(jniSrc)
@@ -23,9 +23,6 @@ vpath %.h $(jniSrc)
 vpath %.so $(jniLibs)
 
 .PHONY: all clean veryClean
-ifndef DEBUG
-.SILENT:
-endif
 
 files := $(wildcard *.java $(javaSrc)*.java)
 
@@ -50,7 +47,7 @@ source: $(sourcesc)
 
 $(sourcesc):%.c:%.h
 	@echo "create .c"
-	@echo "#include \"$<\"" > $(jniSrc)$@
+	@echo "#include \"$<\"" >> $(jniSrc)$@
 
 $(sourcesh):%.h:%.java
 	@echo "create .h"

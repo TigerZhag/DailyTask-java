@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d7f21b5-dc45-438a-bf16-2dba2a6cc63d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestJni" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestTwo.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TestTwo.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/DailyTask/jni/test.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/DailyTask/jni/test.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/DailyTask/jniLibs/test.so" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/makefile" afterPath="$PROJECT_DIR$/makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tiger/daily/pnative/TestJni.java" afterPath="$PROJECT_DIR$/src/com/tiger/daily/pnative/TestJni.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/tiger/daily/pnative/TestTwo.java" afterPath="$PROJECT_DIR$/src/com/tiger/daily/pnative/TestTwo.java" />
     </list>
     <ignored path="DailyTask.iws" />
     <ignored path=".idea/workspace.xml" />
