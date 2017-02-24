@@ -6,7 +6,7 @@ package com.tiger.daily.pnative;
  */
 public class TestJni {
     static {
-        System.loadLibrary("test");
+        System.loadLibrary("TestJni");
     }
 
     public native void forTest();
@@ -14,5 +14,6 @@ public class TestJni {
     public static void main(String[] args) {
         System.out.println(System.getProperty("java.library.path"));
         new TestJni().forTest();
+        new TestTwo().PrintTestTwo();
     }
 }

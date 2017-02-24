@@ -15,42 +15,67 @@ jniLibs := ./src/jniLibs/
 
 #system setting
 javaLibPath := ~/.local/share/umake/ide/idea/bin/
-packageName := com.tiger.daily.pnative
+packageName := com.tiger.daily.pnative.
+
+vpath %.java $(javaSrc)
+vpath %.c $(jniSrc)
+vpath %.h $(jniSrc)
+vpath %.so $(jniLibs)
 
 .PHONY: all clean veryClean
-#.SILENT:
+ifndef DEBUG
+.SILENT:
+endif
 
 files := $(wildcard *.java $(javaSrc)*.java)
-fileNames := $(notdir $(files))
-obj := $(patsubst %.java, %, $(fileNames))
-sourceTemp = $(patsubst $(src)%.java, %, $(files))
-sources = $(subst /,.,$(sourceTemp))
 
-all: $(jniLibs)$(obj).so
+all: #$(jniLibs)$(obj).so
 	@echo $(files)
 	@echo $(fileNames)
 	@echo $(obj)
 	@echo $(sourceTemp)
 	@echo $(sources)
 
-$(jniLibs)$(obj).so: $(jniSrc)$(obj).c $(jniSrc)$(obj).h
-	gcc -fPIC -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux/" -shared -o $@ $^
-	mFileName = $(patsubst $(jniLibs)%,%,$@)
-	ln -f $@ $(javaLibPath)lib$(mFileName)
+sourcesh = $(patsubst %.java,%.h,$(notdir $(files)))
+sourcesc = $(patsubst %.h,%.c,$(sourcesh))
+libs = $(patsubst %.h,lib%.so,$(sourcesh))
 
-$(jniSrc)$(obj).c: $(jniSrc)$(obj).h
-#create the .c file
-	touch $@
-	echo "now you should complete the " $@ "file and make all again"
+lib:$(libs)
 
-$(jniSrc)$(obj).h: $(files)
-	@echo $^
-	@echo $@
-	mFileName = $(patsubst $(jniSrc)%.h,$(packageName).%,$@)
-	javah -o $@ -cp $(src) mFileName
+$(libs):lib%.so:%.c %.h
+	-@gcc -fPIC -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux/"  -shared -o $(jniLibs)$@ $(foreach var,$^,$(jniSrc)$(var))
+	@ln -f $(jniLibs)$@ $(javaLibPath)$(mFileName)
+
+source: $(sourcesc)
+
+$(sourcesc):%.c:%.h
+	@echo "create .c"
+	@echo "#include \"$<\"" > $(jniSrc)$@
+
+$(sourcesh):%.h:%.java
+	@echo "create .h"
+	@javah -o $(jniSrc)$@ -cp $(src) $(packageName)$(basename $(notdir $<))
+
+
+
+# $(jniLibs)$(obj).so: $(jniSrc)$(obj).c $(jniSrc)$(obj).h
+#	gcc -fPIC -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux/" -shared -o $@ $^
+#	mFileName = $(patsubst $(jniLibs)%,%,$@)
+#	ln -f $@ $(javaLibPath)lib$(mFileName)
+
+# $(jniSrc)$(obj).c: $(jniSrc)$(obj).h
+# #create the .c file
+#	touch $@
+#	echo "now you should complete the " $@ "file and make all again"
+
+# $(jniSrc)$(obj).h: $(files)
+#	@echo $^
+#	@echo $@
+#	mFileName = $(patsubst $(jniSrc)%.h,$(packageName).%,$@)
+#	javah -o $@ -cp $(src) mFileName
 
 clean:
 	rm $(jniSrc)*
 	rm $(jniLibs)*
 
-veryClean:
+veryClean: clean

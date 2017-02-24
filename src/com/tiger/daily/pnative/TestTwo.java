@@ -6,7 +6,7 @@ package com.tiger.daily.pnative;
  */
 public class TestTwo {
     static {
-        System.loadLibrary("testtwo");
+        System.loadLibrary("TestTwo");
     }
 
     public native void PrintTestTwo();
